@@ -22,13 +22,17 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: ApartmentListing,
+        loadComponent: () =>
+          import('./apartment-listing/apartment-listing').then((c) => c.ApartmentListing),
         canMatch: [hasRole('renter')],
         canActivate: [renterGuard],
       },
       {
         path: '',
-        component: AdminApartmentListing,
+        loadComponent: () =>
+          import('./admin-apartment-listing/admin-apartment-listing').then(
+            (c) => c.AdminApartmentListing,
+          ),
         canMatch: [hasRole('owner')],
         canActivate: [ownerGuard],
       },
@@ -36,12 +40,16 @@ export const routes: Routes = [
   },
   {
     path: 'apartment-detail/:id',
-    component: ApartmentDetail,
+    loadComponent: () =>
+      import('./apartment-listing/apartment-detail/apartment-detail').then(
+        (c) => c.ApartmentDetail,
+      ),
     canActivate: [AuthGuard],
   },
   {
     path: 'add-postings',
-    component: AddPostings,
+    loadComponent: () =>
+      import('./admin-apartment-listing/add-postings/add-postings').then((c) => c.AddPostings),
     canActivate: [AuthGuard, ownerGuard],
   },
   {
