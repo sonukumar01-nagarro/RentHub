@@ -30,6 +30,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/RentHub/",
               "budgets": [
                 {
                   "type": "initial",
