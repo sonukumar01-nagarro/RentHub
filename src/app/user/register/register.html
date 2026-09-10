@@ -1,0 +1,67 @@
+<p-card>
+  <form [formGroup]="registerForm" (submit)="onSubmit()">
+    @if (errorMessage(); as error) {
+      <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">{{
+        error
+      }}</p-message>
+    }
+    <div class="flex flex-col gap-4 mt-8 mb-4">
+      <div>
+        <input type="email" pInputText placeholder="Email" formControlName="email" class="w-full" />
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <small class="text-red-500">
+            @if (registerForm.get('email')?.errors?.['required']) {
+              <span>Email is required.</span>
+            }
+            @if (registerForm.get('email')?.errors?.['email']) {
+              <span>Email is not valid.</span>
+            }
+          </small>
+        }
+      </div>
+      <div>
+        <p-password
+          fluid="true"
+          autocomplete="off"
+          placeholder="Password"
+          formControlName="password"
+        />
+        @if (registerForm.get('password')?.invalid && registerForm.get('password')?.touched) {
+          <small class="text-red-500">
+            @if (registerForm.get('password')?.errors?.['required']) {
+              <span>Password is required.</span>
+            }
+            @if (registerForm.get('password')?.errors?.['pattern']) {
+              <span>Invalid password format</span>
+            }
+          </small>
+        }
+      </div>
+      <div>
+        <p-password
+          fluid="true"
+          autocomplete="off"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          [feedback]="false"
+        />
+        @if (
+          (registerForm.get('confirmPassword')?.invalid || registerForm.invalid) &&
+          registerForm.get('confirmPassword')?.touched
+        ) {
+          <small class="text-red-500">
+            @if (registerForm.get('confirmPassword')?.errors?.['required']) {
+              <span>Confirm Password is required.</span>
+            }
+            @if (registerForm.errors?.['passwordMissMatch']) {
+              <span>Confirm Password doesn't match with Password.</span>
+            }
+          </small>
+        }
+      </div>
+      <div>
+        <p-button type="submit" label="Register" class="w-full mt-6" styleClass="w-full" />
+      </div>
+    </div>
+  </form>
+</p-card>

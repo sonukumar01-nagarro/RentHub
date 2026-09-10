@@ -1,0 +1,55 @@
+<div class="card">
+  @if (isLoading()) {
+    <app-loading></app-loading>
+  } @else if (error()) {
+    <app-error></app-error>
+  } @else if (apartments()) {
+    <p-dataview [value]="apartments()" rows="4" [paginator]="true">
+      <ng-template #list let-items>
+        <div class="flex flex-col px-xl py-2xl">
+          @for (item of items; track item.id; let first = $first) {
+            <div
+              class="flex justify-between pb-xl"
+              [ngClass]="{ 'border-t border-slate-400 pt-xl': !first }"
+            >
+              <div class="flex gap-lg">
+                <div>
+                  <img
+                    class="h-[12rem] w-[20rem] rounded-lg"
+                    [src]="item.image"
+                    [alt]="item.name"
+                  />
+                </div>
+                <div class="flex flex-col gap-sm">
+                  <p class="font-semibold text-lg">{{ item.title }}</p>
+                  <p class="text-sm">
+                    <em class="pi pi-map mr-2 text-slate-500"></em>{{ item.type }}
+                  </p>
+                  <p class="text-sm">
+                    <em class="pi pi-warehouse mr-2 text-slate-500"></em>{{ item.areaInSqFeet }}
+                  </p>
+                  <ul class="flex gap-sm text-sm">
+                    @for (amenity of item.amenities; track amenity) {
+                      <li class="flex items-center">
+                        <em class="pi pi-dot mr-1"></em><span>{{ amenity }}</span>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              </div>
+              <div class="flex flex-col justify-between">
+                <h2 class="font-bold text-2xl dark:text-slate-400 text-slate-600">
+                  {{ (item.rent | currency: 'INR') ?? '-' }}
+                </h2>
+                <button pButton (click)="onViewDetails(item.id)">View Details</button>
+              </div>
+            </div>
+          }
+        </div>
+      </ng-template>
+    </p-dataview>
+  }
+  @if (error()) {
+    <p>Error occurred</p>
+  }
+</div>

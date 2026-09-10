@@ -1,0 +1,52 @@
+@if (apartmentsResource.isLoading()) {
+  <app-loading></app-loading>
+} @else if (apartmentsResource.error()) {
+  <app-error></app-error>
+} @else if (apartments()) {
+  <section>
+    <app-hero [featuredApartments]="featuredApartments()"></app-hero>
+  </section>
+  <section class="mt-40">
+    <div class="flex gap-2xl">
+      <p-inputgroup>
+        <p-inputgroup-addon class="!px-0">
+          <p-select
+            placeholder="Search by"
+            [options]="searchByOptions()"
+            class="!w-[12rem] !rounded-r-none"
+            [(ngModel)]="selectedSearchOption"
+            (ngModelChange)="searchValue.set(null)"
+          ></p-select>
+        </p-inputgroup-addon>
+        <input
+          type="text"
+          pInputText
+          placeholder="Search"
+          [disabled]="!selectedSearchOption()"
+          [(ngModel)]="searchValue"
+        />
+      </p-inputgroup>
+      <p-select
+        placeholder="Sort by"
+        [(ngModel)]="selectedSortOption"
+        [options]="sortByOptions()"
+        class="!w-[20rem]"
+      ></p-select>
+    </div>
+    <div class="flex flex-wrap gap-x-18 gap-y-12 align-center justify-center mt-xl">
+      @for (apartment of apartments(); track apartment.id) {
+        <app-apartment-item [apartment]="apartment" [isFavorite]="isApartmentFavorite(apartment.id)" (isFavoriteChange)="onFavoriteToggle(apartment.id, $event)"></app-apartment-item>
+      }
+    </div>
+    @if (filteredApartments().length > 0) {
+      <div class="card flex justify-center mt-lg">
+        <p-paginator
+          (onPageChange)="onPageChange($event)"
+          [first]="first()"
+          [totalRecords]="originalApartments().length"
+          [rows]="rows()"
+        />
+      </div>
+    }
+  </section>
+}

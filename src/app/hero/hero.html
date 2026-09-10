@@ -1,0 +1,21 @@
+<div class="card my-2xl px-xl pt-2xl pb-lg rounded-xl border-brand border-4">
+  <p-carousel [value]="featuredApartments()" [numVisible]="1" [numScroll]="1" [circular]="true">
+    <ng-template let-apartment #item>
+      <div class="flex gap-4">
+        <img
+          [src]="apartment.image"
+          [alt]="apartment.name"
+          class="w-4/6 rounded-lg max-h-100 object-cover"
+        />
+        <div class="flex flex-col gap-4 w-2/6 justify-center">
+          <h1 class="text-2xl font-bold text-violet-600">{{ apartment.title }}</h1>
+          <p class="text-md">{{ apartment.description }}</p>
+          <p class="text-xl font-bold text-slate-400">{{ apartment.rent | currency: 'INR' }}</p>
+          <p class="text-sm font-semibold">
+            <em class="pi pi-map-marker"></em> {{ apartment.location }}
+          </p>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div>

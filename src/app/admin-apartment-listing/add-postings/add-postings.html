@@ -1,0 +1,279 @@
+<p-card class="my-xl w-full md:w-3/4 2xl:w-1/2 flex mx-auto shadow-xl">
+  <form [formGroup]="postPropertyForm" (ngSubmit)="onSubmit()">
+    <ng-template #errorTemplate let-formControlName="formControlName" let-label="label">
+      @if (
+        (postPropertyForm.get(formControlName)?.invalid &&
+          (postPropertyForm.get(formControlName)?.touched ||
+            postPropertyForm.get(formControlName)?.dirty)) ||
+        isSubmitted()
+      ) {
+        <small>
+          @if (postPropertyForm.get(formControlName)?.errors?.['required']) {
+            <span class="text-red-500">{{ label }} is required</span>
+          }
+          @if (postPropertyForm.get(formControlName)?.errors?.['minlength']) {
+            <span class="text-red-500">At least 1 {{ label }} should be present </span>
+          }
+        </small>
+      }
+    </ng-template>
+    <div class="form-group flex flex-col gap-xl">
+      <!-- Apartment/Building -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Choose your Apartment/Building</h2>
+        <div class="form-field flex gap-lg">
+          <div class="flex flex-col gap-sm w-1/2">
+            <label>Choose Property Type <span class="text-red-500 ml-1">*</span></label>
+            <p-select formControlName="propertyType" [options]="propertyTypeOptions()"></p-select>
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'propertyType',
+                  label: 'Property Type',
+                }
+              "
+            ></ng-container>
+          </div>
+          <div class="flex flex-col gap-sm w-1/2">
+            <label>Enter Property Name <span class="text-red-500 ml-1">*</span></label>
+            <input pInputText type="text" formControlName="propertyName" />
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'propertyName',
+                  label: 'Property Name',
+                }
+              "
+            ></ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- Shared Property -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Is this shared property?</h2>
+        <div class="form-field flex flex-col gap-sm">
+          <label><span class="text-red-500 ml-1">*</span></label>
+          <div class="flex flex-col gap-sm">
+            <div class="flex items-center">
+              <p-radiobutton
+                name="isSharedProperty"
+                value="true"
+                formControlName="isSharedProperty"
+                inputId="Yes"
+              />
+              <label for="Yes" class="ml-2">Yes</label>
+            </div>
+            <div class="flex items-center">
+              <p-radiobutton
+                name="isSharedProperty"
+                value="false"
+                formControlName="isSharedProperty"
+                inputId="No"
+              />
+              <label for="No" class="ml-2">No</label>
+            </div>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              errorTemplate;
+              context: {
+                formControlName: 'isSharedProperty',
+                label: 'Shared Property',
+              }
+            "
+          ></ng-container>
+        </div>
+      </div>
+      <!-- Property Location -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Property Location</h2>
+        <div class="form-field flex gap-lg">
+          <div class="flex flex-col gap-sm w-full">
+            <label>Enter Address<span class="text-red-500 ml-1">*</span></label>
+            <input pInputText type="text" formControlName="propertyLocation" />
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'propertyLocation',
+                  label: 'Property Location',
+                }
+              "
+            ></ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- Property Details -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Property Details</h2>
+        <div class="form-field flex gap-lg">
+          <div class="flex flex-col gap-sm w-1/2">
+            <label>Square Feet <span class="text-red-500 ml-1">*</span></label>
+            <input pInputText type="text" formControlName="propertyArea" />
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'propertyArea',
+                  label: 'Property Area',
+                }
+              "
+            ></ng-container>
+          </div>
+          <div class="flex flex-col gap-sm w-1/2">
+            <label>Stay Type</label>
+            <div class="flex flex-col flex-wrap gap-sm">
+              <div class="flex items-center">
+                <p-radiobutton
+                  name="stayType"
+                  value="l"
+                  formControlName="stayType"
+                  inputId="longTerm"
+                />
+                <label for="Yes" class="ml-2">Long term(6+ month)</label>
+              </div>
+              <div class="flex items-center">
+                <p-radiobutton
+                  name="stayType"
+                  value="s"
+                  formControlName="stayType"
+                  inputId="shortTerm"
+                />
+                <label for="No" class="ml-2">Short term</label>
+              </div>
+              <div class="flex items-center">
+                <p-radiobutton
+                  name="stayType"
+                  value="ls"
+                  formControlName="stayType"
+                  inputId="Both"
+                />
+                <label for="No" class="ml-2">Both</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Expected Rent -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Expected Rent</h2>
+        <div class="form-field flex gap-lg">
+          <div class="flex flex-col gap-sm w-1/2">
+            <label>Expected rent <span class="text-red-500 ml-1">*</span></label>
+            <input pInputText type="text" formControlName="expectedRent" />
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'expectedRent',
+                  label: 'Rent',
+                }
+              "
+            ></ng-container>
+          </div>
+          <div class="flex items-end gap-sm w-1/2 pb-3">
+            <p-checkbox formControlName="isNegotiable" id="isNegotiable"></p-checkbox>
+            <label for="isNegotiable">Negotiable</label>
+          </div>
+        </div>
+      </div>
+      <!-- Furnished?? -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Is the property furnished?</h2>
+        <div class="form-field flex flex-col gap-sm">
+          <label><span class="text-red-500 ml-1">*</span></label>
+          <div class="flex flex-col flex-wrap gap-sm">
+            <div class="flex items-center">
+              <p-radiobutton
+                name="isFurnished"
+                value="true"
+                formControlName="isFurnished"
+                inputId="Yes"
+              />
+              <label for="Yes" class="ml-2">Yes</label>
+            </div>
+            <div class="flex items-center">
+              <p-radiobutton
+                name="isFurnished"
+                value="false"
+                formControlName="isFurnished"
+                inputId="No"
+              />
+              <label for="No" class="ml-2">No</label>
+            </div>
+          </div>
+          <ng-container
+            *ngTemplateOutlet="
+              errorTemplate;
+              context: {
+                formControlName: 'isFurnished',
+                label: 'Furnished Details',
+              }
+            "
+          ></ng-container>
+        </div>
+      </div>
+      <!-- Amenities -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Amenities included</h2>
+        <label><span class="text-red-500 ml-1">*</span></label>
+        <div class="form-field flex flex-wrap gap-y-lg">
+          @for (amenity of amenities(); track amenity) {
+            <div class="flex gap-sm w-1/3 items-center">
+              <p-checkbox [id]="amenity" [value]="amenity" (onChange)="onAmenityChange($event)"></p-checkbox>
+              <label [for]="amenity">{{ amenity }}</label>
+            </div>
+          }
+        </div>
+        <ng-container
+          *ngTemplateOutlet="
+            errorTemplate;
+            context: {
+              formControlName: 'amenities',
+              label: 'Amenities',
+            }
+          "
+        ></ng-container>
+      </div>
+      <!-- Description -->
+      <div class="flex flex-col gap-sm">
+        <h2 class="text-xl font-bold">Description</h2>
+        <div class="form-field flex flex-col gap-sm">
+          <div class="flex flex-col gap-sm w-full">
+            <label>Title <span class="text-red-500 ml-1">*</span></label>
+            <input pInputText type="text" formControlName="title" />
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'title',
+                  label: 'Title',
+                }
+              "
+            ></ng-container>
+          </div>
+          <div class="flex flex-col gap-sm w-full">
+            <label>Description <span class="text-red-500 ml-1">*</span></label>
+            <textarea pTextarea formControlName="description"></textarea>
+            <ng-container
+              *ngTemplateOutlet="
+                errorTemplate;
+                context: {
+                  formControlName: 'description',
+                  label: 'Description',
+                }
+              "
+            ></ng-container>
+          </div>
+        </div>
+      </div>
+      <!-- Buttons -->
+      <div class="flex gap-xl">
+        <button pButton severity="secondary" size="large" class="w-1/2 font-bold">Reset</button>
+        <button pButton severity="primary" size="large" class="w-1/2 font-bold">Save</button>
+      </div>
+    </div>
+  </form>
+</p-card>

@@ -1,0 +1,13 @@
+<div class="mt-lg">
+  @for(comment of comments(); track comment.id){
+  <div class="mb-lg">
+    <p-avatar [label]="getInitialsForAvatar(comment.author) | uppercase" class="mr-2" size="large" shape="circle" />
+    <textarea pTextarea [autoResize]="true" [disabled]="true" [value]="comment.message" class=" w-full mt-sm"></textarea>
+  </div>
+  }
+  <div>
+    <p-avatar [label]="getInitialsForAvatar(currentUser()?.email ?? '') | uppercase" class="mr-2" size="large" shape="circle" />
+    <textarea rows="5" cols="30" pTextarea [autoResize]="true" class="w-full mt-sm" [(ngModel)]="comment"></textarea>
+  </div>
+  <button pButton class="mt-sm" [disabled]="!comment" (click)="onPostComment()">Comment</button>
+</div>

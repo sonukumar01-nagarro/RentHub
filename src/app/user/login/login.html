@@ -1,0 +1,42 @@
+<p-card>
+  <form [formGroup]="loginForm" (submit)="onSubmit()">
+    @if (errorMessage(); as error) {
+      <p-message severity="error" icon="pi pi-times-circle" styleClass="mb-2">{{
+        error
+      }}</p-message>
+    }
+    <div class="flex flex-col gap-4 mt-8 mb-4">
+      <div>
+        <input type="email" pInputText placeholder="Email" formControlName="email" class="w-full" />
+        @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+          <small class="text-red-500">
+            @if (loginForm.get('email')?.errors?.['required']) {
+              <span>Email is required.</span>
+            }
+            @if (loginForm.get('email')?.errors?.['email']) {
+              <span>Email is not valid.</span>
+            }
+          </small>
+        }
+      </div>
+      <div>
+        <p-password
+          fluid="true"
+          autocomplete="off"
+          placeholder="Password"
+          formControlName="password"
+          [feedback]="false"
+          [toggleMask]="true"
+        />
+        @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+          <small class="text-red-500">
+            @if (loginForm.get('password')?.errors?.['required']) {
+              <span>Password is required.</span>
+            }
+          </small>
+        }
+      </div>
+      <p-button type="submit" label="Login" class="w-full mt-6" styleClass="w-full" />
+    </div>
+  </form>
+</p-card>

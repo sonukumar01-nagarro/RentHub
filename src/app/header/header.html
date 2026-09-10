@@ -1,0 +1,31 @@
+<nav class="h-[4rem] px-8 py-4 bg-brand st">
+  <div class="flex justify-between">
+    <div class="text-xl font-semibold text-white hover:opacity-75">
+      <a routerLink="/apartments"
+        ><span class="bg-white rounded-sm text-primary px-1">Rent</span
+        ><span class="ml-[2px]">Hub</span></a
+      >
+    </div>
+    <ul class="flex gap-4 text-white align-center">
+      <li [title]="isDarkMode() ? 'Light Mode' : 'Dark Mode'">
+        <em
+          class="pi {{
+            isDarkMode() ? 'pi-sun' : 'pi-moon'
+          }} !text-xl cursor-pointer align-bottom hover:opacity-75"
+          (click)="toggleDarkMode()"
+        ></em>
+      </li>
+      @if (currentUser()?.email) {
+        <li>
+          <p-avatar
+            class="!bg-white !text-primary font-bold cursor-pointer hover:opacity-75"
+            [label]="getInitialsForAvatar() | uppercase"
+            shape="circle"
+            (click)="menu.toggle($event)"
+          ></p-avatar>
+          <p-menu #menu [popup]="true" [model]="menuItems()" />
+        </li>
+      }
+    </ul>
+  </div>
+</nav>

@@ -1,3 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "tailwindcss";
+@import 'tailwindcss';
+@import "primeicons";
+
+@custom-variant dark (&:where(.app-dark, .app-dark *));
+
+@theme {
+  --color-brand: var(--color-violet-800);
+  --color-primary: var(--color-blue-800);
+  --color-secondary: var(--color-slate-800);
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.apartment-item-card.p-card {
+  display: flex;
+}
+.apartment-item-card .p-card-body {
+  height: 100%;
+}
+
+.apartment-item-card .p-card-body .p-card-content {
+  flex: 1;
+}
+
+.apartment-item-card .favorite-btn .pi {
+  font-size: 1.5rem;
+}
+
+.p-component.p-dataview.p-dataview-list .p-dataview-content{
+  border-radius: var(--spacing-lg);
+}
