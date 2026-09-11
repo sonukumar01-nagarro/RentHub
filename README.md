@@ -2,6 +2,17 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.1.
 
+This basic assignment uses libraries such as Tailwind, PrimeNg.
+
+This also uses in-memory states only, so data is not persisted anywhere, complete flow will only work without refreshing.
+
+**`Demo`**: https://sonukumar01-nagarro.github.io/RentHub/
+
+For admin/owner user please use credentials
+
+ **`email`**: *`john.doe@example.com`*
+ **`password`**: *`password123`*
+
 ## Development server
 
 To start a local development server, run:
